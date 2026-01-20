@@ -17,12 +17,13 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{2014361e-5d60-41c3-b267-65847677565c}</ProjectGuid>
-    <RootNamespace>SquareOOP</RootNamespace>
+    <ProjectGuid>{06ab4423-bf8a-4c3d-8818-75007e66d519}</ProjectGuid>
+    <RootNamespace>CubeOOP</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
