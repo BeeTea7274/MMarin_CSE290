@@ -1,12 +1,18 @@
 #pragma once
 
-class Cube() {
+class Cube{
 public:
+	Cube();
 	Cube(double, double, double);
-	void CalculateVolume();
-
+	void SetLength(double l);
+	double GetLength();
+	void SetWidth(double w);
+	double GetWidth();
+	void SetHeight(double h);
+	double GetHeight();
+	double CalculateVolume();
 private:
 	double length;
-	double height;
 	double width;
+	double height;
 };
