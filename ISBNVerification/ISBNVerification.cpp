@@ -6,6 +6,10 @@
 
 using namespace std;
 
+// Initialized functions
+void CutString(string, int, int, vector<int>*);
+void PrintVect(vector<int>);
+
 int main() {
 	// Vector for storing individual integers in an ISBN code
 	vector<int> ISBNcodeVect;
@@ -19,31 +23,40 @@ int main() {
 	if (ISBNcodes.is_open()) {
 		while (getline(ISBNcodes, line)) {
 
+
+			int stringLength = line.length();
+			int readableInts = stringLength - 4;
+
 			// String manipulation
 			// First three numbers
 
-			string first3Int = line.substr(0,3);
-			cout << first3Int << " ";
-
+			CutString(line, 0, 3, &ISBNcodeVect);
+			
 			// Single number
 
-			string loneInt = line.substr(4,1);
-			cout << loneInt << " ";
+			CutString(line, 4, 1, &ISBNcodeVect);
 
 			// Second three numbers
 
-			string second3Int = line.substr(6,3);
-			cout << second3Int << " ";
+			CutString(line, 6, 3, &ISBNcodeVect);
 
 			// Five numbers
 
-			string fiveInt = line.substr(10,5);
-			cout << fiveInt << " ";
+			CutString(line, 10, 5, &ISBNcodeVect);
+
 
 			// Identifying number
-			string identifyingInt = line.substr();
+
+			CutString(line, 16, readableInts - 12, &ISBNcodeVect); 
+
+			PrintVect(ISBNcodeVect);
 
 			cout << endl;
+
+
+
+			// Reset for next ISBN code
+			ISBNcodeVect.clear();
 		}
 	}
 
@@ -53,3 +66,19 @@ int main() {
 		cerr << "File not found!";
 	}
 }
+
+// Implimented Functions
+void CutString(string ogString, int startIndex, int length, vector<int>* isbnVect) {
+	string newString = ogString.substr(startIndex, length);
+	for (int i = 0; i < length; i++) {
+		isbnVect->push_back(stoi(newString.substr(i, 1)));
+	}
+}
+
+// Function for printing int Vectors
+void PrintVect(vector<int> vect) {
+	for (int i = 0; i < vect.size(); i++) {
+		cout << vect[i] << " ";
+	}
+}
+
