@@ -47,7 +47,9 @@ int main() {
 
 			// Identifying number
 
-			CutString(line, 16, readableInts - 12, &ISBNcodeVect); 
+			string identifyingNumber = line.substr(16, readableInts - 12);
+
+			ISBNcodeVect.push_back(stoi(identifyingNumber));
 
 			PrintVect(ISBNcodeVect);
 
