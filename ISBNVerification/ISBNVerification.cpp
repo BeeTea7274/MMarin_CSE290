@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include "DoublyLinkedList.h"
+#include <cstdlib>
 
 using namespace std;
 
@@ -17,6 +18,7 @@ int main() {
 	// Vector for storing individual integers in an ISBN code and identifying prime numbers
 	vector<int> ISBNcodeVect;
 	vector<int> PrimeNumbers;
+	vector<DoublyLinkedList*> ListHeads;
 
 	// Map for subjects and their respective prime numbers
 	map<int, string> SubjectNums = { {61,"Biology"},{71,"English"},
@@ -30,6 +32,18 @@ int main() {
 
 	// bool for first line parsing
 	bool isFirstLine = true;
+
+	// Creation of all list heads and pushback to vector that holds it
+	for (auto it = SubjectNums.begin(); it != SubjectNums.end(); it++) 
+	{
+		// Debug terminal message
+		cout << it->first << " " << it->second << endl;
+
+		DoublyLinkedList* ListHead = new DoublyLinkedList(it->first, it->second);
+		ListHeads.push_back(ListHead);
+	}
+	
+	cout << endl;
 
 	// For every ISBN code in ISBNcodes.txt
 	if (ISBNcodes.is_open()) {
@@ -56,6 +70,17 @@ int main() {
 				{
 					int SubjectNum = CalculateSubjectNumber(ISBNcodeVect);
 					cout << SubjectNums[SubjectNum] << endl;
+
+					// Make a linked list node and append it
+					DoublyLinkedListNode* newNode = new DoublyLinkedListNode(ISBNcodeVect, line, SubjectNums[SubjectNum]);
+
+					for (int i = 0; i < ListHeads.size(); i++) 
+					{
+						if (ListHeads[i]->identifyingNum == SubjectNum) {
+							ListHeads[i]->appendNode(newNode);
+							i = ListHeads.size();
+						}
+					}
 				}
 				else 
 				{
@@ -70,12 +95,20 @@ int main() {
 				ISBNcodeVect.clear();
 			}
 		}
+		system("PAUSE");
+		system("cls");
 	}
 
 
 	// If file is not found out put error code
 	else {
 		cerr << "File not found!";
+	}
+
+	// Print from list traversal
+	for (int i = 0; i < ListHeads.size(); i++) 
+	{
+		ListHeads[i]->printList();
 	}
 }
 
