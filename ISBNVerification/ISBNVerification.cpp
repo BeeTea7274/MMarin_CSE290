@@ -27,7 +27,9 @@ int main() {
 
 	// Create ISBNcodes ifstream object and open in input mode
 	ifstream ISBNcodes;
+	ofstream ValidISBNcodes;
 	ISBNcodes.open("ISBN_Codes.txt", ios::in);
+	ValidISBNcodes.open("ValidCodes.txt",ios::out);
 	string line;
 
 	// bool for first line parsing
@@ -70,6 +72,7 @@ int main() {
 				{
 					int SubjectNum = CalculateSubjectNumber(ISBNcodeVect);
 					cout << SubjectNums[SubjectNum] << endl;
+					ValidISBNcodes << line << endl;
 
 					// Make a linked list node and append it
 					DoublyLinkedListNode* newNode = new DoublyLinkedListNode(ISBNcodeVect, line, SubjectNums[SubjectNum]);
