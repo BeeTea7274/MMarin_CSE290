@@ -10,7 +10,7 @@ public:
     vector<list<string>> table;
     int totalBuckets = 3;
     int listSize = 10;
-    float capacity = 0.75;
+    double capacity = 0.75;
     int entries = 0;
 
     void Resize() {
@@ -57,9 +57,32 @@ public:
         return hashCode;
     }
 
-    bool addItem(string code) {
-    
-    
+    bool AddItem(string code) {
+        int hash = Hash(code);
+        int index = hash % totalBuckets;
+        while (true) {
+            if (table[index % totalBuckets].size() < listSize) {
+                table[index % totalBuckets].push_back(code);
+                entries++;
+                cout << "New entry at index: " << index << endl << "Line: " << code << endl << endl;
+                return true;
+            }
+            else {
+                index++;
+            }
+        }
+    }
+
+    void PrintTable() {
+        // For every item in the old table
+        for (int i = 0; i < this->table.size(); i++) {
+            list<string>::iterator it;
+            cout << "Index: " << i << endl;
+            for (it = this->table[i].begin(); it != this->table[i].end(); it++) {
+                cout << *it << endl;
+            }
+            cout << endl;
+        }
     }
 
 };
