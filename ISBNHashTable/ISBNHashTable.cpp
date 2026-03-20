@@ -44,6 +44,22 @@ int main()
         system("Pause");
         system("cls");
         hashTable.PrintTable();
+
+        if (hashTable.SearchItem("182-0-987-67094-9")) {
+            cout << "Item found!" << endl;
+        }
+        else {
+            cout << "Item not found!" << endl;
+        }
+        if (hashTable.DeleteItem("182-0-987-67094-9")) {
+            cout << "Deletion successful!" << endl;
+        }
+        if (hashTable.SearchItem("182-0-987-67094-9")) {
+            cout << "Item found!" << endl;
+        }
+        else {
+            cout << "Item not found!" << endl;
+        }
     }
 
     // Print error if text file is not found

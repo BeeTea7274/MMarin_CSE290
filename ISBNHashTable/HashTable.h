@@ -73,6 +73,35 @@ public:
         }
     }
 
+    bool DeleteItem(string code) {
+        int hash = Hash(code);
+        int index = hash % totalBuckets;
+        list<string>::iterator it;
+        for (int i = 0; i < totalBuckets; i++) {
+            for (it = table[i].begin(); it != table[i].end(); it++) {
+                if (*it == code) {
+                    table[i].erase(it);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    bool SearchItem(string code) {
+        int hash = Hash(code);
+        int index = hash % totalBuckets;
+        list<string>::iterator it;
+        for (int i = 0; i < totalBuckets; i++) {
+            for (it = table[i].begin(); it != table[i].end(); it++) {
+                if (*it == code) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     void PrintTable() {
         // For every item in the old table
         for (int i = 0; i < this->table.size(); i++) {
