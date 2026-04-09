@@ -24,30 +24,41 @@ int main()
     // If the txt file is open
     if (ISBNCodes.is_open()) {
         while (getline(ISBNCodes, line)) {
-
-            if (hashTable.entries / (hashTable.totalBuckets * hashTable.listSize) > hashTable.capacity) {
+            double entries = hashTable.entries;
+            double totalBuckets = hashTable.totalBuckets;
+            double listSize = hashTable.listSize;
+            cout << (entries / (totalBuckets * listSize)) << endl;
+            if ((entries / (totalBuckets * listSize)) > hashTable.capacity) {
                 // Resize
-                cout << "Resize occured" << endl << "Old totalbuckets: " << hashTable.totalBuckets << endl;
+                cout << "Resize occured" << endl << "Old totalbuckets: " << totalBuckets << endl;
+                cout << entries / (totalBuckets * listSize) << endl << endl;
                 hashTable.Resize();
-                cout << "New total buckets: "<< hashTable.totalBuckets << endl;
-                cout << "Entries: " << hashTable.entries << endl << endl;
+                cout << "New total buckets: "<< totalBuckets << endl;
+                cout << "Entries: " << entries << endl << endl;
             }
 
-            int hash = hashTable.Hash(line);
-            int index = hash % hashTable.totalBuckets;
-            while (true) {
-                if (hashTable.table[index % hashTable.totalBuckets].size() < hashTable.listSize) {
-                    hashTable.table[index % hashTable.totalBuckets].push_back(line);
-                    hashTable.entries++;
-                    cout << "New entry at index: " << index << endl << "Line: " << line << endl << endl;
-                    break;
-                }
-                else {
-                    index++;
-                }
-            }
-
+            hashTable.AddItem(line);
             
+            
+        }
+        system("Pause");
+        system("cls");
+        hashTable.PrintTable();
+
+        if (hashTable.SearchItem("182-0-987-67094-9")) {
+            cout << "Item found!" << endl;
+        }
+        else {
+            cout << "Item not found!" << endl;
+        }
+        if (hashTable.DeleteItem("182-0-987-67094-9")) {
+            cout << "Deletion successful!" << endl;
+        }
+        if (hashTable.SearchItem("182-0-987-67094-9")) {
+            cout << "Item found!" << endl;
+        }
+        else {
+            cout << "Item not found!" << endl;
         }
     }
 
