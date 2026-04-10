@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+#include <iostream>
+#include <bitset>
 using namespace std;
 
 class GraphAutomata {
@@ -17,50 +19,54 @@ public:
     int rule;
 
     // Constructor function 
-    GraphAutomata(int size, int ourRule) : graphSize(size), graph(size), rule(ourRule) {}
+    GraphAutomata(int size, int ourRule) : graphSize(size), rule(ourRule) {}
 
-    void createCircularGraph() {
-        // For loop to initialize cell node -> new CellNode()
-        // Another loop to assign right and left pointers
-        //  left  ptr ->  i -1 + graphSize  % graphSize - = 9
-        // right  i + 1   %  graphSize : 0 -> 1, 1 -> 2
-
+    void createCircularGraph(vector<CellNode*> &graph) {
+        
         for (int i = 0; i < graphSize; i++) {
-            CellNode* tempCell = new CellNode();
-            graph.push_back(tempCell);
+            graph.push_back(new CellNode());
         }
-
+        
         for (int i = 0; i < graphSize; i++) {
-            graph[i]->left = graph[((i - 1) + graphSize) % graphSize];
-            graph[i]->right = graph[((i + 1) + graphSize) % graphSize];
+            graph[i]->left = graph[((i-1) + graphSize) % graphSize];
+            graph[i]->right = graph[((i+1) + graphSize) % graphSize];
         }
-
     }
 
     int applyRule(int leftState, int selfState, int rightState) {
-
-        //  1 0 1   ->  3
-        // leftState << 2;  // leftState = 4
-        // selftState << 1   // selfState  -> 2 ^ 1  = 2  
-        // focusedDigit = leftState | selftState | rightState   // in this case focused digit is 7
-
-        //  RUle # 224    
-        //  1  1  1  0  1  0  0  0
-            //128
-            //64
-            //32
-            //2 2 4
-
-            //retrun(rule >> focusedDigit) % 1
-
-        return 0;
+        int combinedInt = leftState * 4 + selfState * 2 + rightState;
+        bitset<8> ruleBit(rule % 256);
+        return ruleBit[combinedInt];
     }
 
     void printGeneration() {
-    
+        for (int i = 0; i < graphSize; i++) {
+            if (graph[i]->state == 0) {
+                cout << " ";
+            }
+            else {
+                cout << "*";
+            }
+        }
+        cout << endl;
+
+        vector<CellNode*> newVector;
+        createCircularGraph(newVector);
+        for (int i = 0; i < graphSize; i++) {
+            newVector[i]->state = applyRule(graph[i]->left->state,graph[i]->state,graph[i]->right->state);
+        }
+        graph = newVector;
     }
 
     void applySeed() {
-        
+        if (graphSize % 2 == 0) {
+            int index = graphSize / 2;
+            graph[index]->state = 1;
+            graph[index + 1]->state = 1;
+        }
+        else {
+            int index = graphSize / 2;
+            graph[index + 1]->state = 1;
+        }
     }
 };
