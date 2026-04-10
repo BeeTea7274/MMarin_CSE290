@@ -21,13 +21,19 @@ public:
 
     void createCircularGraph() {
         // For loop to initialize cell node -> new CellNode()
-
         // Another loop to assign right and left pointers
-
         //  left  ptr ->  i -1 + graphSize  % graphSize - = 9
-
         // right  i + 1   %  graphSize : 0 -> 1, 1 -> 2
 
+        for (int i = 0; i < graphSize; i++) {
+            CellNode* tempCell = new CellNode();
+            graph.push_back(tempCell);
+        }
+
+        for (int i = 0; i < graphSize; i++) {
+            graph[i]->left = graph[((i - 1) + graphSize) % graphSize];
+            graph[i]->right = graph[((i + 1) + graphSize) % graphSize];
+        }
 
     }
 
@@ -52,5 +58,9 @@ public:
 
     void printGeneration() {
     
+    }
+
+    void applySeed() {
+        
     }
 };
