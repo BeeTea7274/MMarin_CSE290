@@ -1,22 +1,24 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <iterator>
 using namespace std;
 
 class Node {
 public:
 	Node* previous;
-	int distance;
+	double distance;
 	int ID;
-	Node(int id) : previous(nullptr), distance(INFINITY), ID(id) {}
+	bool visited;
+	Node(int id) : previous(nullptr), distance(INFINITY), ID(id), visited(false) {}
 };
 
 class Edge {
 public:
-	int weight;
+	double weight;
 	Node* fromVertex;
 	Node* toVertex;
-	Edge(int weight, Node* from, Node* to) : weight(weight), fromVertex(from), toVertex(to) {};
+	Edge(Node* from, Node* to, double weight) : weight(weight), fromVertex(from), toVertex(to) {};
 };
 
 class Graph {
@@ -42,30 +44,72 @@ public:
 
 
 	void AddEdge(int u, int v, int d) {
-		adjacencyList[u].push_back(new Edge(d,Search(u),Search(v)));
+		adjacencyList[u].push_back(new Edge(Search(u),Search(v),d));
 	}
 
-	bool Dijkstra(Node* startNode) {
-		vector<Node*> unvisited;
+	Node* Dijkstra(Node* startNode) {
+		Node* currNode = startNode;
+		int unvisited = 0;
+		
+
 		for (Node* node : vertices) {
-			node->distance = INFINITY;
 			node->previous = nullptr;
-			unvisited.push_back(node);
+			node->distance = INFINITY;
+			unvisited++;
+			cout << "Node: " << node->ID << " added to unvisited vector" << endl;
 		}
 
-		startNode->distance = 0;
+		currNode->distance = 0;
 
-		while (unvisited.size() > 0){
+		while (unvisited > 0) {
+			currNode->visited = true;
+
 			vector<Edge*> adjacentEdges;
-			for (int i = 0; i < adjacencyList[startNode->ID].size(); i++) {
-				adjacentEdges.push_back(adjacencyList[startNode->ID][i]);
+			for (Edge* edge : adjacencyList[currNode->ID]) {
+				adjacentEdges.push_back(edge);
+				cout << "Added Edge to adjacent edges of Node: " << currNode->ID << endl;
+				cout << "EDGE) FROMVERTEX " << edge->fromVertex->ID << " TOVERTEX " << edge->toVertex->ID << endl;
 			}
-			Node* currentVertex = nullptr;
+
+			for (Edge* edge : adjacentEdges) {
+				int alternateDistance = edge->weight + currNode->distance;
+				if (alternateDistance < edge->toVertex->distance && edge->toVertex->visited == false) {
+					edge->toVertex->distance = alternateDistance;
+					edge->toVertex->previous = currNode;
+				}
+			}
+
+			double currentShortestPath = INFINITY;
+			Node* currentShortestNode = nullptr;
+			for (Edge* edge : adjacentEdges) {
+				if (edge->toVertex->distance < currentShortestPath && edge->toVertex->visited == false) {
+					currentShortestNode = edge->toVertex;
+					currentShortestPath = edge->toVertex->distance;
+				}
+			}
+
+			adjacentEdges.clear();
+			currNode = currentShortestNode;
+			unvisited--;
 		}
+
+		return currNode;
 	}
 };
 
 int main()
 {
-   
+	Graph g(6);
+	// AddEdge(int u, int v, int d);
+	g.AddEdge(0, 1, 2);
+	g.AddEdge(0, 2, 8);
+	g.AddEdge(1, 2, 5);
+	g.AddEdge(1, 4, 6);
+	g.AddEdge(2, 3, 2);
+	g.AddEdge(2, 4, 3);
+	g.AddEdge(4, 5, 9);
+	g.AddEdge(3, 5, 3);
+	g.AddEdge(3, 4, 1);
+
+	Node* lastNode = g.Dijkstra(g.Search(0));
 }
