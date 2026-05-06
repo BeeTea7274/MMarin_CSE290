@@ -45,7 +45,7 @@ public:
 
 
 	void AddEdge(int u, int v, int d) {
-		adjacencyList[u].push_back(new Edge(Search(u),Search(v),d));
+		adjacencyList[u].push_back(new Edge(d, Search(u),Search(v)));
 	}
 
 	Vertex* Dijkstra(Vertex* startVertex) {
