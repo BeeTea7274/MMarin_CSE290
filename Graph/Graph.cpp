@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <queue>
+#include <list>
 using namespace std;
 
 class Graph {
@@ -44,6 +46,11 @@ public:
 			}
 
 		}
+	}
+
+	void breadthFirstSearch(int u) {
+		queue<int> discoveryQueue;
+
 	}
 };
 
