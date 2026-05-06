@@ -41,6 +41,7 @@ void solveHamPath(bool graph[V][V], vector<int> path, vector<vector<int>>& allPa
 
     // Try different vertices as the next candidate in the path
     for (int v = 0; v < V; v++) {
+        
         if (isSafe(v, graph, path, pos)) {
             path[pos] = v; // Choose
 

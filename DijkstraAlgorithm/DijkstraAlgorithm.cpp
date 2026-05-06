@@ -2,6 +2,7 @@
 #include <vector>
 #include <list>
 #include <queue>
+#include <iterator>
 using namespace std;
 
 class Vertex {
@@ -44,7 +45,7 @@ public:
 
 
 	void AddEdge(int u, int v, int d) {
-		adjacencyList[u].push_back(new Edge(d,Search(u),Search(v)));
+		adjacencyList[u].push_back(new Edge(d, Search(u),Search(v)));
 	}
 
 	Vertex* Dijkstra(Vertex* startVertex) {
