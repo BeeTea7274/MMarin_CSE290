@@ -3,5 +3,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Hamiltonian path self practice/Hamiltonian path self practice.vcxproj" />
+  <Project Path="BipartiteGraphSelfPractice/BipartiteGraphSelfPractice.vcxproj" />
+  <Project Path="BipartitePrac/BipartitePrac.vcxproj" />
 </Solution>
