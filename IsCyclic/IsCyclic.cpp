@@ -38,7 +38,7 @@ public:
 		return false;
 	}
 
-	bool isCyclicRecursive(vector<bool> visited, int parent, int vertex) {
+	bool isCyclicRecursive(vector<bool> &visited, int parent, int vertex) {
 		visited[vertex] = true;
 		for (int v : graph[vertex]) {
 			if (!visited[v]) {

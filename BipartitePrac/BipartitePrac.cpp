@@ -82,12 +82,15 @@ public:
 
 int main()
 {
-    Graph g(3);
+    Graph g(5);
     g.SetColor(0, Graph::Color::BLACK);
     g.SetColor(1, Graph::Color::WHITE);
     g.SetColor(2, Graph::Color::WHITE);
+    g.SetColor(3, Graph::Color::BLACK);
+    g.SetColor(4, Graph::Color::WHITE);
     g.AddEdge(0, 1);
     g.AddEdge(0, 2);
+    g.AddEdge(3, 4);
 
     vector<int> discoveryList;
     bool isBipartite = g.BipartiteChecker(0, discoveryList);
